@@ -24,8 +24,6 @@ class Router:
             # Store the prefix, its length, and the link
             processed_table.append((binary_prefix, prefix_length, output_link))
         
-        # Sort the table by prefix length (index 1) in descending order
-        # This is the crucial step for the Longest Prefix Match algorithm
         processed_table.sort(key=lambda item: item[1], reverse=True)
         
         print("--- Built and Sorted Forwarding Table (Longest to Shortest) ---")
@@ -45,16 +43,14 @@ class Router:
             
             # (c) Check if the binary destination IP starts with the binary prefix
             if binary_dest_ip.startswith(binary_prefix):
-                # (d) First match is the longest match (due to sorting)
+                # (d) First match is the longest match 
                 return output_link
                 
         # (e) If no match is found after checking all routes
         return "Default Gateway"
 
-# --- Main execution for testing ---
 if __name__ == "__main__":
     
-    # Test Case provided in the assignment
     routes_list = [
         ("223.1.1.0/24", "Link 0"),
         ("223.1.2.0/24", "Link 1"),
@@ -67,10 +63,10 @@ if __name__ == "__main__":
     
     # 2. Define test IPs
     test_ips = [
-        "223.1.1.100",  # Should match "Link 0"
-        "223.1.2.5",    # Should match "Link 1"
-        "223.1.250.1",  # Should match "Link 4 (ISP)"
-        "198.51.100.1"  # Should match "Default Gateway"
+        "223.1.1.100", 
+        "223.1.2.5",   
+        "223.1.250.1",  
+        "198.51.100.1"
     ]
     
     # 3. Verify the routing
@@ -85,4 +81,5 @@ if __name__ == "__main__":
     assert my_router.route_packet("223.1.250.1") == "Link 4 (ISP)"
     assert my_router.route_packet("198.51.100.1") == "Default Gateway"
     
+
     print("\n--- All Test Cases Passed ---")
